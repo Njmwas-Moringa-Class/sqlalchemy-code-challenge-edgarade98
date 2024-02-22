@@ -15,8 +15,7 @@ from sqlalchemy.orm import session
 
 
 Base = declarative_base()
-engine = create_engine('sqlite:///db/restaurants.db', echo=True)
-
+engine = create_engine('sqlite:///restaurants.db', echo=True)
 
 
 class Review(Base):
@@ -24,6 +23,7 @@ class Review(Base):
 
     id = Column(Integer, primary_key=True)
     star_rating = Column(Integer)
+    review = Column(String)
     restaurant_id = Column(Integer, ForeignKey('restaurants.id'))
     customer_id = Column(Integer, ForeignKey('customers.id'))
 
@@ -116,4 +116,6 @@ def delete_reviews(self, restaurant):
 
 def __repr__(self):
         return f'Customer: {self.first_name} {self.last_name}' 
+
+Base.metadata.create_all(engine)
 
